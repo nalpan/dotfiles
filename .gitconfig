@@ -1,0 +1,23 @@
+[alias]
+    fe = fetch
+    sw = switch
+    pl = pull
+    rb = rebase
+    co = checkout
+    st = status
+    pu = push
+    lo = log --oneline
+    cm = commit
+    ad = add
+    me = merge
+    br = branch
+[push]
+	autoSetupRemote = true
+[core]
+    editor = vim
+[ghq]
+	root = ~/src
+[pull]
+	autostash = true
+[rebase]
+	autostash = true
