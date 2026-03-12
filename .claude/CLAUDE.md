@@ -1,0 +1,1 @@
+/Users/Nakata.Kazuhiro/dotfiles/AGENTS.md
