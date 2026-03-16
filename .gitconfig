@@ -1,3 +1,5 @@
+[include]
+    path = ~/.gitconfig.local
 [alias]
     fe = fetch
     sw = switch
