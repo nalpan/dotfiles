@@ -1,15 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   system.stateVersion = 6;
-  system.primaryUser = "Nakata.Kazuhiro";
+  system.primaryUser = username;
 
   # Determinate Nixがデーモンを管理するため無効化
   nix.enable = false;
 
-  users.users."Nakata.Kazuhiro" = {
-    name = "Nakata.Kazuhiro";
-    home = "/Users/Nakata.Kazuhiro";
+  users.users.${username} = {
+    name = username;
+    home = "/Users/${username}";
   };
 
   homebrew = {

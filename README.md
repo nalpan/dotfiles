@@ -20,6 +20,22 @@ sudo nix run nix-darwin -- switch --flake .#default
 
 2回目以降は `sudo darwin-rebuild switch --flake .#default` で更新できます。
 
+## マシンの追加
+
+`flake.nix` の `darwinConfigurations` に新しいエントリを追加します。
+
+```nix
+darwinConfigurations."home" = mkDarwinConfig {
+  username = "kazuhiro";
+};
+```
+
+適用時に設定名を指定して実行します。
+
+```bash
+sudo darwin-rebuild switch --flake .#home
+```
+
 ## 管理対象
 
 ### dotfiles (Home Manager)

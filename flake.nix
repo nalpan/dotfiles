@@ -1,5 +1,5 @@
 {
-  description = "nix-darwin configuration for Nakata.Kazuhiro";
+  description = "nix-darwin + Home Manager configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -13,18 +13,26 @@
     };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, ... }: {
-    darwinConfigurations."default" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        ./nix/darwin.nix
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users."Nakata.Kazuhiro" = import ./nix/home.nix;
-        }
-      ];
+  outputs = { nixpkgs, nix-darwin, home-manager, ... }:
+    let
+      mkDarwinConfig = { username }: nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit username; };
+        modules = [
+          ./nix/darwin.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit username; };
+            home-manager.users.${username} = import ./nix/home.nix;
+          }
+        ];
+      };
+    in
+    {
+      darwinConfigurations."default" = mkDarwinConfig {
+        username = "Nakata.Kazuhiro";
+      };
     };
-  };
 }
