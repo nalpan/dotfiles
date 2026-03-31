@@ -26,7 +26,7 @@
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
-    initExtra = ''
+    initContent = ''
       # Emacs keybindings
       bindkey -e
 
@@ -58,21 +58,22 @@
   programs.git = {
     enable = true;
     includes = [{ path = "~/.gitconfig.local"; }];
-    aliases = {
-      fe = "fetch";
-      sw = "switch";
-      pl = "pull";
-      rb = "rebase";
-      co = "checkout";
-      st = "status";
-      pu = "push";
-      lo = "log --oneline";
-      cm = "commit";
-      ad = "add";
-      me = "merge";
-      br = "branch";
-    };
-    extraConfig = {
+    signing.format = null;
+    settings = {
+      alias = {
+        fe = "fetch";
+        sw = "switch";
+        pl = "pull";
+        rb = "rebase";
+        co = "checkout";
+        st = "status";
+        pu = "push";
+        lo = "log --oneline";
+        cm = "commit";
+        ad = "add";
+        me = "merge";
+        br = "branch";
+      };
       push.autoSetupRemote = true;
       core.editor = "vim";
       ghq.root = "~/src";
