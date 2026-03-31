@@ -16,63 +16,10 @@
   ];
 
   home.file = {
+    ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
     ".copilot/copilot-instructions.md".source = ../AGENTS.md;
     ".claude/CLAUDE.md".source = ../AGENTS.md;
-    ".claude/settings.json".text = builtins.toJSON {
-      permissions = {
-        allow = [
-          "Bash(git:*)" "Bash(gh:*)" "Bash(ls:*)" "Bash(cat:*)"
-          "Bash(head:*)" "Bash(tail:*)" "Bash(wc:*)" "Bash(file:*)"
-          "Bash(tree:*)" "Bash(stat:*)" "Bash(find:*)" "Bash(grep:*)"
-          "Bash(rg:*)" "Bash(which:*)" "Bash(where:*)" "Bash(go:*)"
-          "Bash(make:*)" "Bash(npm:*)" "Bash(yarn:*)" "Bash(pnpm:*)"
-          "Bash(docker:*)" "Bash(docker-compose:*)" "Bash(cargo:*)"
-          "Bash(sort:*)" "Bash(uniq:*)" "Bash(diff:*)" "Bash(jq:*)"
-          "Bash(sed:*)" "Bash(awk:*)" "Bash(echo:*)" "Bash(printf:*)"
-          "Bash(env:*)" "Bash(printenv:*)" "Bash(pwd:*)" "Bash(date:*)"
-          "Bash(uname:*)" "Bash(ps:*)" "Bash(curl:*)" "Bash(mkdir:*)"
-        ];
-        deny = [
-          "Bash(git rebase:*)" "Bash(git reset:*)"
-          "Bash(git push --force:*)" "Bash(git push -f:*)"
-          "Bash(git push --force-with-lease:*)"
-        ];
-        defaultMode = "acceptEdits";
-      };
-      model = "opus[1m]";
-      hooks = {
-        Stop = [{
-          matcher = "";
-          hooks = [{
-            type = "command";
-            command = "osascript -e 'display notification \"Claude Codeが入力を待っています\" with title \"Claude Code\" sound name \"Glass\"'";
-          }];
-        }];
-        Notification = [{
-          matcher = "";
-          hooks = [{
-            type = "command";
-            command = "osascript -e 'display notification \"Claude Codeが入力を待っています\" with title \"Claude Code\" sound name \"Glass\"'";
-          }];
-        }];
-      };
-      language = "Japanese";
-    };
-  };
-
-  programs.ghostty = {
-    enable = true;
-    package = null;
-    settings = {
-      theme = "Dracula";
-      font-family = "Moralerspace Neon HW Regular";
-      font-size = 14;
-      font-feature = "-dlig";
-      macos-titlebar-style = "tabs";
-      window-padding-x = 12;
-      window-padding-y = 12;
-      background-opacity = 0.90;
-    };
+    ".claude/settings.json".source = ../. + "/.claude/settings.json";
   };
 
   programs.zsh = {
