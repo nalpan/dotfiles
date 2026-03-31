@@ -38,22 +38,23 @@ sudo darwin-rebuild switch --flake .#home
 
 ## 管理対象
 
-### dotfiles (Home Manager)
+### Home Manager ネイティブモジュール
+
+- `programs.zsh` — シェル設定、エイリアス、autosuggestions、completions
+- `programs.starship` — プロンプト
+- `programs.git` — Git設定、エイリアス、グローバルignore
+
+### dotfiles (home.file)
 
 | ファイル | 配置先 |
 |---|---|
-| `.zshrc` | `~/.zshrc` |
-| `.alias` | `~/.alias` |
-| `.peco-src` | `~/.peco-src` |
-| `.gitconfig` | `~/.gitconfig` |
-| `.config/git/ignore` | `~/.config/git/ignore` |
 | `.config/ghostty/config` | `~/.config/ghostty/config` |
 | `AGENTS.md` | `~/.copilot/copilot-instructions.md`, `~/.claude/CLAUDE.md` |
 | `.claude/settings.json` | `~/.claude/settings.json` |
 
-### CLIパッケージ (Home Manager)
+### CLIパッケージ (home.packages)
 
-gh, ghq, gitui, neovim, peco, starship, tree, treemd, zsh-autosuggestions, zsh-completions
+gh, ghq, gitui, neovim, peco, tree, treemd
 
 ### GUIアプリ (nix-darwin + Homebrew cask)
 
