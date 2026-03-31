@@ -11,21 +11,48 @@
     gitui
     neovim
     peco
-    starship
     tree
     treemd
-    zsh-autosuggestions
-    zsh-completions
   ];
 
   home.file = {
-    ".zshrc".source = ../. + "/.zshrc";
-    ".alias".source = ../. + "/.alias";
-    ".peco-src".source = ../. + "/.peco-src";
     ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
     ".copilot/copilot-instructions.md".source = ../AGENTS.md;
     ".claude/CLAUDE.md".source = ../AGENTS.md;
     ".claude/settings.json".source = ../. + "/.claude/settings.json";
+  };
+
+  programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;
+    enableCompletion = true;
+    initExtra = ''
+      # Emacs keybindings
+      bindkey -e
+
+      # peco-src: Quick directory change with ghq + peco
+      function peco-src () {
+        local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+        if [ -n "$selected_dir" ]; then
+          BUFFER="cd ''${selected_dir}"
+          zle accept-line
+        fi
+        zle clear-screen
+      }
+      zle -N peco-src
+      bindkey '^]' peco-src
+    '';
+    shellAliases = {
+      g = "git";
+      n = "npm";
+      y = "yarn";
+      ll = "ls -al";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.git = {

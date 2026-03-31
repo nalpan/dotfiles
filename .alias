@@ -1,5 +1,0 @@
-# alias
-alias g="git"
-alias n="npm"
-alias y="yarn"
-alias ll="ls -al"
