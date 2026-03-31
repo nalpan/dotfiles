@@ -25,7 +25,7 @@ nix run home-manager/master -- switch --flake .
 以下のパッケージは Homebrew で別途インストールが必要です。
 
 ```bash
-brew install ghq peco starship mise zsh-autosuggestions zsh-completions
+brew install mise
 ```
 
 ## 管理対象ファイル
