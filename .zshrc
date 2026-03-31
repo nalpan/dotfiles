@@ -9,11 +9,8 @@ bindkey -e
 eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
+FPATH=~/.nix-profile/share/zsh/site-functions:$FPATH
+autoload -Uz compinit
+compinit
