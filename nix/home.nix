@@ -5,6 +5,19 @@
   home.homeDirectory = "/Users/Nakata.Kazuhiro";
   home.stateVersion = "24.11";
 
+  home.packages = with pkgs; [
+    gh
+    ghq
+    gitui
+    neovim
+    peco
+    starship
+    tree
+    treemd
+    zsh-autosuggestions
+    zsh-completions
+  ];
+
   home.file = {
     ".zshrc".source = ../. + "/.zshrc";
     ".alias".source = ../. + "/.alias";
