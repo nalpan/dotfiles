@@ -39,3 +39,4 @@ brew install ghq peco starship mise zsh-autosuggestions zsh-completions
 | `.config/git/ignore` | `~/.config/git/ignore` |
 | `.config/ghostty/config` | `~/.config/ghostty/config` |
 | `AGENTS.md` | `~/.copilot/copilot-instructions.md`, `~/.claude/CLAUDE.md` |
+| `.claude/settings.json` | `~/.claude/settings.json` |

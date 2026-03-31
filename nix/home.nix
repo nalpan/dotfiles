@@ -14,6 +14,7 @@
     ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
     ".copilot/copilot-instructions.md".source = ../AGENTS.md;
     ".claude/CLAUDE.md".source = ../AGENTS.md;
+    ".claude/settings.json".source = ../. + "/.claude/settings.json";
   };
 
   programs.home-manager.enable = true;
