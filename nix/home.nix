@@ -16,10 +16,10 @@
   ];
 
   home.file = {
-    ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
-    ".copilot/copilot-instructions.md".source = ../AGENTS.md;
-    ".claude/CLAUDE.md".source = ../AGENTS.md;
-    ".claude/settings.json".source = ../. + "/.claude/settings.json";
+    ".config/ghostty/config".source = ./config/ghostty/config;
+    ".copilot/copilot-instructions.md".source = ./config/AGENTS.md;
+    ".claude/CLAUDE.md".source = ./config/AGENTS.md;
+    ".claude/settings.json".source = ./config/claude/settings.json;
   };
 
   programs.zsh = {
