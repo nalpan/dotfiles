@@ -10,6 +10,8 @@
     ".gitconfig".source = ../. + "/.gitconfig";
     ".config/git/ignore".source = ../. + "/.config/git/ignore";
     ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
+    ".copilot/copilot-instructions.md".source = ../AGENTS.md;
+    ".claude/CLAUDE.md".source = ../AGENTS.md;
   };
 
   programs.home-manager.enable = true;
