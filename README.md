@@ -14,10 +14,11 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 ```bash
 git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
-nix run home-manager/master -- switch --flake ~/dotfiles
+cd ~/dotfiles
+nix run home-manager/master -- switch --flake .
 ```
 
-2回目以降は `home-manager switch --flake ~/dotfiles` で更新できます。
+2回目以降は `home-manager switch --flake .` で更新できます。
 
 ### 3. Homebrew パッケージのインストール
 
