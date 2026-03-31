@@ -1,6 +1,6 @@
 # dotfiles
 
-Nix Home Manager で管理する dotfiles。
+Nix (nix-darwin + Home Manager) で管理する dotfiles。
 
 ## セットアップ
 
@@ -15,12 +15,14 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ```bash
 git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-nix run home-manager/master -- switch --flake .
+sudo nix run nix-darwin -- switch --flake .#default
 ```
 
-2回目以降は `home-manager switch --flake .` で更新できます。
+2回目以降は `sudo darwin-rebuild switch --flake .#default` で更新できます。
 
-## 管理対象ファイル
+## 管理対象
+
+### dotfiles (Home Manager)
 
 | ファイル | 配置先 |
 |---|---|
@@ -32,3 +34,11 @@ nix run home-manager/master -- switch --flake .
 | `.config/ghostty/config` | `~/.config/ghostty/config` |
 | `AGENTS.md` | `~/.copilot/copilot-instructions.md`, `~/.claude/CLAUDE.md` |
 | `.claude/settings.json` | `~/.claude/settings.json` |
+
+### CLIパッケージ (Home Manager)
+
+gh, ghq, gitui, neovim, peco, starship, tree, treemd, zsh-autosuggestions, zsh-completions
+
+### GUIアプリ (nix-darwin + Homebrew cask)
+
+Figma, Ghostty, Google Chrome Canary, Karabiner-Elements, MeetingBar, Raycast, Stats, Visual Studio Code, JetBrains Mono Nerd Font
