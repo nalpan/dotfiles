@@ -9,6 +9,7 @@
     ".zshrc".source = ../. + "/.zshrc";
     ".gitconfig".source = ../. + "/.gitconfig";
     ".config/git/ignore".source = ../. + "/.config/git/ignore";
+    ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
   };
 
   programs.home-manager.enable = true;
