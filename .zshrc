@@ -7,7 +7,6 @@ bindkey -e
 
 # activate, init
 eval "$(starship init zsh)"
-eval "$(mise activate zsh)"
 
 source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 

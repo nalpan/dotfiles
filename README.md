@@ -20,14 +20,6 @@ nix run home-manager/master -- switch --flake .
 
 2回目以降は `home-manager switch --flake .` で更新できます。
 
-### 3. Homebrew パッケージのインストール
-
-以下のパッケージは Homebrew で別途インストールが必要です。
-
-```bash
-brew install mise
-```
-
 ## 管理対象ファイル
 
 | ファイル | 配置先 |
