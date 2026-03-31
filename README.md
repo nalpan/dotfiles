@@ -33,6 +33,8 @@ brew install ghq peco starship mise zsh-autosuggestions zsh-completions
 | ファイル | 配置先 |
 |---|---|
 | `.zshrc` | `~/.zshrc` |
+| `.alias` | `~/.alias` |
+| `.peco-src` | `~/.peco-src` |
 | `.gitconfig` | `~/.gitconfig` |
 | `.config/git/ignore` | `~/.config/git/ignore` |
 | `.config/ghostty/config` | `~/.config/ghostty/config` |

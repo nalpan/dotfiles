@@ -1,6 +1,6 @@
 # source
-source ~/dotfiles/.alias
-source ~/dotfiles/.peco-src
+source ~/.alias
+source ~/.peco-src
 
 # Emacs keybindings
 bindkey -e

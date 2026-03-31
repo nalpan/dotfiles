@@ -7,6 +7,8 @@
 
   home.file = {
     ".zshrc".source = ../. + "/.zshrc";
+    ".alias".source = ../. + "/.alias";
+    ".peco-src".source = ../. + "/.peco-src";
     ".gitconfig".source = ../. + "/.gitconfig";
     ".config/git/ignore".source = ../. + "/.config/git/ignore";
     ".config/ghostty/config".source = ../. + "/.config/ghostty/config";
