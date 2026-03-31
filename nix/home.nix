@@ -7,6 +7,8 @@
 
   home.file = {
     ".zshrc".source = ../. + "/.zshrc";
+    ".gitconfig".source = ../. + "/.gitconfig";
+    ".config/git/ignore".source = ../. + "/.config/git/ignore";
   };
 
   programs.home-manager.enable = true;
