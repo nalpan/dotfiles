@@ -73,6 +73,7 @@
         ad = "add";
         me = "merge";
         br = "branch";
+        wt = "worktree";
       };
       push.autoSetupRemote = true;
       core.editor = "vim";
