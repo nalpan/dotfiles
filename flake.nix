@@ -15,20 +15,30 @@
 
   outputs = { nixpkgs, nix-darwin, home-manager, ... }:
     let
-      mkDarwinConfig = { username }: nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit username; };
-        modules = [
-          ./nix/darwin.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit username; };
-            home-manager.users.${username} = import ./nix/home.nix;
-          }
-        ];
-      };
+      mkDarwinConfig = { username }:
+        let
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+              "claude-code"
+            ];
+          };
+        in
+        nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit username; };
+          modules = [
+            { nixpkgs.pkgs = pkgs; }
+            ./nix/darwin.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit username; };
+              home-manager.users.${username} = import ./nix/home.nix;
+            }
+          ];
+        };
     in
     {
       darwinConfigurations."default" = mkDarwinConfig {
