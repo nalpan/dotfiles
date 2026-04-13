@@ -29,6 +29,7 @@
       "raycast"
       "stats"
       "visual-studio-code"
+      "claude"
     ];
   };
 }
