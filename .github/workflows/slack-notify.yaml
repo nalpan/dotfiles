@@ -1,0 +1,104 @@
+name: Slack Notify on Push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build commit summary
+        id: summary
+        run: |
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.event.after }}"
+          REPO="${{ github.repository }}"
+          BRANCH="${{ github.ref_name }}"
+          PUSHER="${{ github.actor }}"
+
+          # Collect commits (author, message)
+          COMMITS=$(git log --pretty=format:"• %s (%an)" "${BEFORE}..${AFTER}" 2>/dev/null || git log --pretty=format:"• %s (%an)" -10)
+          COUNT=$(git rev-list --count "${BEFORE}..${AFTER}" 2>/dev/null || echo "?")
+
+          # Escape for JSON
+          COMMITS_ESCAPED=$(echo "$COMMITS" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
+
+          echo "commits=$COMMITS_ESCAPED" >> "$GITHUB_OUTPUT"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "pusher=$PUSHER" >> "$GITHUB_OUTPUT"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "repo=$REPO" >> "$GITHUB_OUTPUT"
+          echo "url=https://github.com/${REPO}/commits/${BRANCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Send Slack notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          COMMITS=${{ steps.summary.outputs.commits }}
+          COUNT="${{ steps.summary.outputs.count }}"
+          PUSHER="${{ steps.summary.outputs.pusher }}"
+          BRANCH="${{ steps.summary.outputs.branch }}"
+          REPO="${{ steps.summary.outputs.repo }}"
+          URL="${{ steps.summary.outputs.url }}"
+
+          python3 - <<PYEOF
+          import urllib.request, json, os
+
+          commits = ${{ steps.summary.outputs.commits }}
+          count = "${COUNT}"
+          pusher = "${PUSHER}"
+          branch = "${BRANCH}"
+          repo = "${REPO}"
+          url = "${URL}"
+
+          payload = {
+              "blocks": [
+                  {
+                      "type": "header",
+                      "text": {
+                          "type": "plain_text",
+                          "text": f":merged: {repo} に {count} 件の更新",
+                          "emoji": True
+                      }
+                  },
+                  {
+                      "type": "section",
+                      "fields": [
+                          {"type": "mrkdwn", "text": f"*ブランチ:*\n`{branch}`"},
+                          {"type": "mrkdwn", "text": f"*プッシュ者:*\n{pusher}"}
+                      ]
+                  },
+                  {
+                      "type": "section",
+                      "text": {
+                          "type": "mrkdwn",
+                          "text": f"*コミット一覧:*\n{commits}"
+                      }
+                  },
+                  {
+                      "type": "actions",
+                      "elements": [
+                          {
+                              "type": "button",
+                              "text": {"type": "plain_text", "text": "変更を確認する"},
+                              "url": url
+                          }
+                      ]
+                  }
+              ]
+          }
+
+          data = json.dumps(payload).encode("utf-8")
+          req = urllib.request.Request(
+              os.environ["SLACK_WEBHOOK_URL"],
+              data=data,
+              headers={"Content-Type": "application/json"}
+          )
+          with urllib.request.urlopen(req) as resp:
+              print(f"Slack response: {resp.status}")
+          PYEOF
