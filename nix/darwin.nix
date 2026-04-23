@@ -22,7 +22,7 @@
     casks = [
       "figma"
       "font-jetbrains-mono-nerd-font"
-      "ghostty"
+      "cmux"
       "google-chrome@canary"
       "karabiner-elements"
       "meetingbar"
