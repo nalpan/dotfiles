@@ -20,16 +20,17 @@
     };
 
     casks = [
+      "claude"
+      "cmux"
       "figma"
       "font-jetbrains-mono-nerd-font"
-      "cmux"
       "google-chrome@canary"
       "karabiner-elements"
       "meetingbar"
       "raycast"
       "stats"
       "visual-studio-code"
-      "claude"
+      "obsidian"
     ];
   };
 }

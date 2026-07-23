@@ -11,17 +11,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-claude-code.url = "github:ryoppippi/nix-claude-code";
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, ... }:
+  outputs = { nixpkgs, nix-darwin, home-manager, nix-claude-code, ... }:
     let
       mkDarwinConfig = { username }:
         let
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
-            config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-              "claude-code"
-            ];
           };
         in
         nix-darwin.lib.darwinSystem {
@@ -34,7 +32,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit username; };
+              home-manager.extraSpecialArgs = { inherit username nix-claude-code; };
               home-manager.users.${username} = import ./nix/home.nix;
             }
           ];

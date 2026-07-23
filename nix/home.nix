@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, nix-claude-code, ... }:
 
 {
   home.username = username;
@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     bat
-    claude-code
+    nix-claude-code.packages.aarch64-darwin.default
     gh
     ghq
     gitui
