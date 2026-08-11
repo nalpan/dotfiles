@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     bat
+    gnupg
     nix-claude-code.packages.aarch64-darwin.default
     gh
     ghq

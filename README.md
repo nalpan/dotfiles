@@ -54,8 +54,30 @@ sudo darwin-rebuild switch --flake .#home
 
 ### CLIパッケージ (home.packages)
 
-gh, ghq, gitui, neovim, peco, tree, treemd
+bat, gh, ghq, gitui, gnupg, neovim, peco, tree, treemd
 
 ### GUIアプリ (nix-darwin + Homebrew cask)
 
 Figma, Ghostty, Google Chrome Canary, Karabiner-Elements, MeetingBar, Raycast, Stats, Visual Studio Code, JetBrains Mono Nerd Font
+
+## パッケージのバージョンアップ
+
+`home.packages` などで指定しているパッケージのバージョンは、`flake.lock` が固定している `nixpkgs` のバージョンに従います。個別パッケージだけを狙ってアップデートすることはできないため、`nixpkgs` ごと更新します。
+
+### すべての input を更新
+
+```bash
+nix flake update
+```
+
+### 特定の input だけ更新（例: nixpkgs のみ）
+
+```bash
+nix flake lock --update-input nixpkgs
+```
+
+`flake.lock` の差分を確認したらコミットし、変更を適用します。
+
+```bash
+sudo darwin-rebuild switch --flake .#default
+```
