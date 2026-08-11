@@ -32,6 +32,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.extraSpecialArgs = { inherit username nix-claude-code; };
               home-manager.users.${username} = import ./nix/home.nix;
             }
