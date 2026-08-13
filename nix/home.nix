@@ -6,6 +6,7 @@
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
+    awscli2
     bat
     gnupg
     nix-claude-code.packages.aarch64-darwin.default
@@ -30,6 +31,13 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     initContent = ''
+      # Homebrew (Apple Silicon)
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        # nixで管理しているパッケージを優先するためHomebrewは末尾に置く
+        path=(''${path:#/opt/homebrew/*} /opt/homebrew/bin /opt/homebrew/sbin)
+      fi
+
       # Emacs keybindings
       bindkey -e
 
