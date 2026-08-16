@@ -82,7 +82,11 @@ in
       --argjson managed "$(cat ${claudeSettingsFile})" \
       '$existing * $managed')"
 
-    run ${pkgs.coreutils}/bin/install -m 600 <(printf '%s\n' "$merged") "$outFile"
+    # macOSのcoreutilsはプロセス置換(/dev/fd/N)を読めず失敗するため一時ファイルを経由する
+    tmpFile="$(${pkgs.coreutils}/bin/mktemp)"
+    printf '%s\n' "$merged" > "$tmpFile"
+    run ${pkgs.coreutils}/bin/install -m 600 "$tmpFile" "$outFile"
+    ${pkgs.coreutils}/bin/rm -f "$tmpFile"
   '';
 
   programs.zsh = {
