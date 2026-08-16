@@ -16,6 +16,7 @@
     enable = true;
 
     onActivation = {
+      # この一覧に無いcaskを手動で入れても、darwin-rebuild switchで削除されないようにする
       cleanup = "none";
     };
 

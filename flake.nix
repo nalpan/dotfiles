@@ -38,11 +38,11 @@
             }
           ];
         };
-      # 業務端末のユーザー名は公開リポジトリに置かないため、実行時の環境から取得する。
-      # sudo実行時はsudoが設定するSUDO_USER、非sudo時はUSERが業務ユーザー名になる。
-      workUsername =
+      # 端末のユーザー名を公開リポジトリに置かないため、実行時の環境から取得する。
+      # sudo実行時はsudoが設定するSUDO_USER、非sudo時はUSERがこの端末のユーザー名になる。
+      machineUsername =
         let
-          explicit = builtins.getEnv "DOTFILES_WORK_USER";
+          explicit = builtins.getEnv "DOTFILES_USERNAME";
           sudoUser = builtins.getEnv "SUDO_USER";
           currentUser = builtins.getEnv "USER";
         in
@@ -50,16 +50,16 @@
         else if sudoUser != "" then sudoUser
         else if currentUser != "" then currentUser
         else throw ''
-          業務端末のユーザー名を取得できませんでした。
-          .#work の適用には --impure が必要です。
-          例: sudo darwin-rebuild switch --flake .#work --impure
+          端末のユーザー名を取得できませんでした。
+          .#default の適用には --impure が必要です。
+          例: sudo darwin-rebuild switch --flake .#default --impure
         '';
     in
     {
       darwinConfigurations = {
-        home = mkDarwinConfig { username = "kazuhiro"; };
-        # ユーザー名をリポジトリに置かないため、適用には --impure が必要
-        work = mkDarwinConfig { username = workUsername; };
+        # 端末ごとの差分は local/ 配下で吸収するため、設定は1つに統一している。
+        # ユーザー名を実行時の環境から取るので適用には --impure が必要。
+        default = mkDarwinConfig { username = machineUsername; };
       };
     };
 }

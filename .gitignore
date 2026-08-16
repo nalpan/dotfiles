@@ -1,6 +1,9 @@
 backup_*/
 result
 skills/
+local/**
+!local/**/
+!local/**/*.sample.json
 
 !**/.gitkeep
 

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ping:*)",
+      "Read(~/Desktop/**)"
+    ]
+  },
+  "model": "sonnet"
+}

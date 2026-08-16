@@ -1,5 +1,37 @@
-{ config, pkgs, username, nix-claude-code, ... }:
+{ config, lib, pkgs, username, nix-claude-code, ... }:
 
+let
+  merge = import ./lib/merge.nix;
+
+  localRoot = "${config.home.homeDirectory}/dotfiles/local";
+
+  # local/<path> があればそのパスを返す。
+  # pure評価では絶対パスの pathExists が false を返すため、--impure なしでも
+  # エラーにならず「端末固有設定なし」に degrade する。
+  localPath = path:
+    let p = "${localRoot}/${path}";
+    in if builtins.pathExists p then (/. + p) else null;
+
+  # テキスト設定: ベースの末尾に端末固有設定を追記する
+  mergeText = path:
+    let l = localPath path;
+    in builtins.readFile (./files + "/${path}")
+      + lib.optionalString (l != null)
+        ("\n# --- 端末固有設定 (local/${path}) ---\n" + builtins.readFile l);
+
+  # JSON設定: ディープマージする(リストは連結)
+  mergeJson = path:
+    let
+      l = localPath path;
+      base = builtins.fromJSON (builtins.readFile (./files + "/${path}"));
+    in
+    if l == null then base
+    else merge.deepMerge base (builtins.fromJSON (builtins.readFile l));
+
+  claudeSettingsFile =
+    (pkgs.formats.json { }).generate "claude-settings.json"
+      (mergeJson ".claude/settings.json");
+in
 {
   home.username = username;
   home.homeDirectory = "/Users/${username}";
@@ -20,13 +52,38 @@
   ];
 
   home.file = {
-    ".config/ghostty/config".source = ./config/ghostty/config;
-    ".copilot/copilot-instructions.md".source = ./config/AGENTS.md;
+    ".config/ghostty/config".text = mergeText ".config/ghostty/config";
+    ".copilot/copilot-instructions.md".source = ./shared/AGENTS.md;
     ".claude/CLAUDE.md".text =
-      builtins.readFile ./config/AGENTS.md
+      builtins.readFile ./shared/AGENTS.md
       + "\n@~/.claude/CLAUDE.local.md\n";
-    ".claude/settings.json".source = ./config/claude/settings.json;
   };
+
+  # ~/.claude/settings.json は読み取り専用シンボリックリンクにできない。
+  # Claude Code自身が model や theme をこのファイルに書き込むため、
+  # 実ファイルとして書き出し、Nixが管理していないキーは既存値を残す。
+  home.activation.claudeSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    outFile="$HOME/.claude/settings.json"
+
+    run mkdir -p "$HOME/.claude"
+
+    # 以前の世代が張ったシンボリックリンクが残っていれば実ファイルに置き換える
+    if [ -L "$outFile" ]; then
+      run rm -f "$outFile"
+    fi
+
+    existing='{}'
+    if [ -f "$outFile" ]; then
+      existing="$(cat "$outFile")"
+    fi
+
+    merged="$(${pkgs.jq}/bin/jq -n \
+      --argjson existing "$existing" \
+      --argjson managed "$(cat ${claudeSettingsFile})" \
+      '$existing * $managed')"
+
+    run ${pkgs.coreutils}/bin/install -m 600 <(printf '%s\n' "$merged") "$outFile"
+  '';
 
   programs.zsh = {
     enable = true;
