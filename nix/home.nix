@@ -22,7 +22,9 @@
   home.file = {
     ".config/ghostty/config".source = ./config/ghostty/config;
     ".copilot/copilot-instructions.md".source = ./config/AGENTS.md;
-    ".claude/CLAUDE.md".source = ./config/AGENTS.md;
+    ".claude/CLAUDE.md".text =
+      builtins.readFile ./config/AGENTS.md
+      + "\n@~/.claude/CLAUDE.local.md\n";
     ".claude/settings.json".source = ./config/claude/settings.json;
   };
 
@@ -52,6 +54,11 @@
       }
       zle -N peco-src
       bindkey '^]' peco-src
+
+      # ローカル専用の追加設定(gitで管理しない)
+      if [ -f "$HOME/.zshrc.local" ]; then
+        source "$HOME/.zshrc.local"
+      fi
     '';
     shellAliases = {
       g = "git";
