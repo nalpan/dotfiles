@@ -43,6 +43,7 @@
     ],
     "deny": [
       "Bash(git rebase:*)",
+      "Bash(git revert:*)",
       "Bash(git reset:*)",
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",
