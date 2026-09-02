@@ -20,6 +20,10 @@
       cleanup = "none";
     };
 
+    brews = [
+      "playwright-cli"
+    ];
+
     casks = [
       "claude"
       "cmux"
