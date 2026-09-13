@@ -38,9 +38,7 @@ in
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
-    awscli2
     bat
-    gnupg
     nix-claude-code.packages.aarch64-darwin.default
     gh
     ghq

@@ -31,11 +31,9 @@
       "font-jetbrains-mono-nerd-font"
       "google-chrome@canary"
       "karabiner-elements"
-      "meetingbar"
       "raycast"
       "stats"
       "visual-studio-code"
-      "obsidian"
     ];
   };
 }
