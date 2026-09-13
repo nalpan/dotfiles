@@ -43,7 +43,6 @@ in
     gh
     ghq
     gitui
-    neovim
     peco
     tree
     treemd
