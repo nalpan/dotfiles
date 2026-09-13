@@ -29,7 +29,6 @@
       "cmux"
       "figma"
       "font-jetbrains-mono-nerd-font"
-      "google-chrome@canary"
       "karabiner-elements"
       "raycast"
       "stats"
