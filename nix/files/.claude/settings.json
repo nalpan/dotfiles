@@ -51,6 +51,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus",
   "language": "Japanese",
   "autoUpdatesChannel": "stable"
 }
