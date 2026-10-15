@@ -38,9 +38,7 @@
 
 | 変更した箇所 | 更新するREADMEの項目 |
 |---|---|
-| `nix/home.nix` の `home.packages` | 「CLIパッケージ」 |
 | `nix/home.nix` の `home.file` / `programs.*` | 「配置ファイル」の表 |
 | `nix/files/` / `local/` のファイル追加 | 「配置ファイル」の表 |
-| `nix/darwin.nix` の `homebrew.casks` | 「GUIアプリ・フォント」 |
 
-READMEの記載はNixファイル上の識別子(パッケージ名・cask名・属性名)をそのまま使い、目視で突き合わせられる状態を保つこと。
+READMEの記載はNixファイル上の識別子(属性名・パス)をそのまま使い、目視で突き合わせられる状態を保つこと。

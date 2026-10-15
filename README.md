@@ -117,14 +117,12 @@ sudo darwin-rebuild rollback
 - `local/` と `*.local` ファイルはgit管理外なので、端末固有の内容を自由に書けます。
 - このほか `programs.starship` (プロンプト) と `programs.home-manager` を有効にしていますが、これらは設定ファイルを生成しません。
 
-### CLIパッケージ
+### パッケージ
 
-`nix/home.nix` の `home.packages`:
+インストールされるパッケージの一覧は、次のコードを参照してください。
 
-awscli2, bat, gh, ghq, gitui, gnupg, neovim, peco, tree, treemd, nix-claude-code (Claude Code)
-
-### GUIアプリ・フォント
-
-`nix/darwin.nix` の `homebrew.casks`:
-
-claude, cmux, figma, font-jetbrains-mono-nerd-font, google-chrome@canary, karabiner-elements, meetingbar, obsidian, raycast, stats, visual-studio-code
+| 種類 | 定義箇所 |
+|---|---|
+| CLIパッケージ | [`nix/home.nix`](./nix/home.nix) の `home.packages` |
+| CLIパッケージ(Homebrew) | [`nix/darwin.nix`](./nix/darwin.nix) の `homebrew.brews` |
+| GUIアプリ・フォント | [`nix/darwin.nix`](./nix/darwin.nix) の `homebrew.casks` |
