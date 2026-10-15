@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, nix-claude-code, ... }:
+{ config, lib, pkgs, username, nix-claude-code, hunk, ... }:
 
 let
   merge = import ./lib/merge.nix;
@@ -43,6 +43,7 @@ in
     gh
     ghq
     gitui
+    hunk.packages.aarch64-darwin.hunk
     peco
     tree
     treemd

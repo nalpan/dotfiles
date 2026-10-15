@@ -15,9 +15,13 @@
       url = "github:ryoppippi/nix-claude-code";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, nix-claude-code, ... }:
+  outputs = { nixpkgs, nix-darwin, home-manager, nix-claude-code, hunk, ... }:
     let
       mkDarwinConfig = { username }:
         let
@@ -36,7 +40,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
-              home-manager.extraSpecialArgs = { inherit username nix-claude-code; };
+              home-manager.extraSpecialArgs = { inherit username nix-claude-code hunk; };
               home-manager.users.${username} = import ./nix/home.nix;
             }
           ];
