@@ -17,7 +17,7 @@ if [ -n "${CMUX_WORKSPACE_ID:-}" ] && command -v cmux >/dev/null; then
   cache="${TMPDIR:-/tmp}/claude-cmux-status-${session_id}"
   # statusLine は頻繁に呼ばれるため、値が変わったときだけ cmux へ送る
   if [ "$(cat "$cache" 2>/dev/null || true)" != "$label" ]; then
-    if cmux set-status "$key" "$label" --icon sparkle --priority 50 >/dev/null; then
+    if cmux set-status "$key" "$label" --icon sparkle --priority 1 >/dev/null; then
       printf '%s' "$label" >"$cache"
     fi
   fi
