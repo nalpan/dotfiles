@@ -55,6 +55,14 @@ in
     ".claude/CLAUDE.md".text =
       builtins.readFile ./shared/AGENTS.md
       + "\n@~/.claude/CLAUDE.local.md\n";
+    ".claude/statusline-cmux.sh" = {
+      source = ./files/.claude/statusline-cmux.sh;
+      executable = true;
+    };
+    ".claude/statusline-cmux-clear.sh" = {
+      source = ./files/.claude/statusline-cmux-clear.sh;
+      executable = true;
+    };
   };
 
   # ~/.claude/settings.json は読み取り専用シンボリックリンクにできない。

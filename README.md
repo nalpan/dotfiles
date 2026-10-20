@@ -108,6 +108,8 @@ sudo darwin-rebuild rollback
 |---|---|---|---|
 | `~/.claude/settings.json` | `nix/files/.claude/settings.json` | `local/.claude/settings.json` | JSONをマージ |
 | `~/.config/ghostty/config` | `nix/files/.config/ghostty/config` | `local/.config/ghostty/config` | 末尾に追記 |
+| `~/.claude/statusline-cmux.sh` | `nix/files/.claude/statusline-cmux.sh` | なし | — |
+| `~/.claude/statusline-cmux-clear.sh` | `nix/files/.claude/statusline-cmux-clear.sh` | なし | — |
 | `~/.claude/CLAUDE.md` | `nix/shared/AGENTS.md` | `~/.claude/CLAUDE.local.md` | 実行時に読み込み |
 | `~/.copilot/copilot-instructions.md` | `nix/shared/AGENTS.md` | なし | — |
 | `~/.zshrc` | `nix/home.nix` の `programs.zsh` | `~/.zshrc.local` | 末尾でsource |
