@@ -51,6 +51,8 @@ in
 
   home.file = {
     ".config/ghostty/config".text = mergeText ".config/ghostty/config";
+    ".config/cmux/cmux.json".source =
+      (pkgs.formats.json { }).generate "cmux.json" (mergeJson ".config/cmux/cmux.json");
     ".copilot/copilot-instructions.md".source = ./shared/AGENTS.md;
     ".claude/CLAUDE.md".text =
       builtins.readFile ./shared/AGENTS.md
