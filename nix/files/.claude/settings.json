@@ -52,5 +52,21 @@
   },
   "model": "opus",
   "language": "Japanese",
-  "autoUpdatesChannel": "stable"
+  "autoUpdatesChannel": "stable",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-cmux.sh"
+  },
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/statusline-cmux-clear.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
