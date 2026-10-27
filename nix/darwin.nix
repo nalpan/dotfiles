@@ -25,9 +25,7 @@
     ];
 
     casks = [
-      "claude"
       "cmux"
-      "figma"
       "font-jetbrains-mono-nerd-font"
       "google-japanese-ime"
       "karabiner-elements"
