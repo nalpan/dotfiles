@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Claude Code の statusLine。model・effort・コンテキスト使用量を表示し、cmux のサイドバーにも同じ値を出す。
+# 5 時間枠の使用率はサイドバーの進捗バーに出す。
 set -euo pipefail
 
 input="$(cat)"
@@ -23,6 +24,26 @@ if [ -n "${CMUX_WORKSPACE_ID:-}" ] && command -v cmux >/dev/null; then
   if [ "$(cat "$cache" 2>/dev/null || true)" != "$label" ]; then
     if cmux set-status "$key" "$label" --icon sparkle --priority 1 >/dev/null; then
       printf '%s' "$label" >"$cache"
+    fi
+  fi
+
+  five_hour_used="$(jq -r '.rate_limits.five_hour.used_percentage // empty | floor' <<<"$input")"
+  if [ -n "$five_hour_used" ]; then
+    resets_at="$(jq -r '.rate_limits.five_hour.resets_at' <<<"$input")"
+    seven_day_used="$(jq -r '.rate_limits.seven_day.used_percentage // empty | floor' <<<"$input")"
+    usage_label="5h ${five_hour_used}%"
+    if [ -n "$seven_day_used" ]; then
+      usage_label="$usage_label · 7d ${seven_day_used}%"
+    fi
+    usage_label="$usage_label · $(date -r "$resets_at" +%H:%M) まで"
+    usage_command=(set-progress "$(printf '%d.%02d' $((five_hour_used / 100)) $((five_hour_used % 100)))" --label "$usage_label")
+  else
+    usage_command=(clear-progress)
+  fi
+  usage_cache="${TMPDIR:-/tmp}/claude-cmux-usage-${session_id}"
+  if [ "$(cat "$usage_cache" 2>/dev/null || true)" != "${usage_command[*]}" ]; then
+    if cmux "${usage_command[@]}" >/dev/null; then
+      printf '%s' "${usage_command[*]}" >"$usage_cache"
     fi
   fi
 fi
